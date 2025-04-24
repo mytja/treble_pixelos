@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://avatars.githubusercontent.com/u/165590896?s=200&v=4">
+  <img src="https://avatars.githubusercontent.com/u/82160282?s=200&v=4">
 </p>
 
 ### Building
@@ -10,29 +10,24 @@ As a first step, you'll have to create and enter a folder with the appropriate n
 To do that, run these commands:
 
 ```bash
-mkdir ~/evo
-cd ~/evo
+mkdir ~/pixelos
+cd ~/pixelos
 ```
 
 ## Initalize the Treble Evolution X repo
 ```bash
-repo init --depth=1 -u https://github.com/Evolution-X/manifest -b vic
+repo init --depth=1 -u https://github.com/PixelOS-AOSP/manifest.git -b fifteen --git-lfs
 ```
 
 ## Clone the Manifest
 This adds necessary dependencies for the Evolution X GSI.
 ```bash
-git clone https://github.com/mytja/treble_manifest.git -b evo-vic .repo/local_manifests
+git clone https://github.com/mytja/treble_manifest.git -b pixelos-fifteen .repo/local_manifests
 ```
 
 ## Sync the repository
 ```bash
 repo sync -c --force-sync --no-clone-bundle --no-tags -j$(nproc --all)
-```
-
-In case of later Webview building issues, run the following command:
-```bash
-repo forall -c 'git lfs install && git lfs pull && git lfs checkout'
 ```
 
 ### Apply the patches
@@ -41,7 +36,7 @@ Run this command in the ROM folder:
 ./patches/apply-all.sh .
 ```
 
-This command will apply all TrebleDroid and personal patches. If any patch fails to apply correctly, as indicated by `### FAILED APPLYING` output, you need to apply the patch manually. Steps to do so are described in short on [treble_evo_patches repo](https://github.com/mytja/treble_evo_patches/blob/main/README.md).
+This command will apply all TrebleDroid and personal patches. If any patch fails to apply correctly, as indicated by `### FAILED APPLYING` output, you need to apply the patch manually. Steps to do so are described in short on [treble_pixelos_patches repo](https://github.com/mytja/treble_pixelos_patches/blob/fifteen/README.md).
 
 ### Turn On Caching
 You can speed up subsequent builds by adding these lines to your `~/.bashrc` OR `~/.zshrc` file:
@@ -55,20 +50,20 @@ export CCACHE_MAXSIZE=50G # 50 GB
 ## Build Treble app
 This GSI uses a modified Treble app in order to achieve more functionality. You need to build the Treble app.
 ```bash
-cd ~/evo/treble_app
+cd ~/pixelos/treble_app
 
 ./build.sh release
 ```
 
 ## Compilation 
-In the ROM folder (`~/evo`), run this to start compilation:
+In the ROM folder (`~/pixelos`), run this to start compilation:
 
 ```bash
 source build/envsetup.sh
 
 ccache -M 50G -F 0
 
-lunch evolution_arm64_bgN-bp1a-userdebug 
+lunch pixelos_arm64_bgN-bp1a-userdebug 
 
 make systemimage -j$(nproc --all)
 ```
@@ -85,13 +80,11 @@ xz -9 -T0 -v -z system.img
 
 ## Troubleshooting
 If you face any conflicts while applying patches, apply the patch manually.
-For any other issues, report them via the [Issues](https://github.com/mytja/treble_evo/issues) tab.
+For any other issues, report them via the [Issues](https://github.com/mytja/treble_pixelos/issues) tab.
 
 ## Credits
-This GSI was mostly inspired by [Ahnet](https://github.com/ahnet-69)'s [Evolution X GSI](https://github.com/ahnet-69/treble_evo) repository.
-
 These people have helped this project in some way or another, so they should be the ones who receive all the credit:
-- [Evolution X Team](https://github.com/Evolution-X)
+- [PixelOS Team](https://github.com/PixelOS)
 - [Phhusson](https://github.com/phhusson)
 - [AndyYan](https://github.com/AndyCGYan)
 - [Ponces](https://github.com/ponces)

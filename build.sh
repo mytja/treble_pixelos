@@ -1,17 +1,19 @@
-echo "  _____            _       _   _              __  __ "
-echo " | ____|_   _____ | |_   _| |_(_) ___  _ __   \ \/ / "
-echo " |  _| \ \ / / _ \| | | | | __| |/ _ \| '_ \   \  /  "
-echo " | |___ \ V / (_) | | |_| | |_| | (_) | | | |  /  \  "
-echo " |_____| \_/ \___/|_|\__,_|\__|_|\___/|_| |_| /_/\_\ "
-echo "                                                     "
+echo "  _____ _          _  ____   _____ "
+echo " |  __ (_)        | |/ __ \ / ____|"
+echo " | |__) |__  _____| | |  | | (___  "
+echo " |  ___/ \ \/ / _ \ | |  | |\___ \ "
+echo " | |   | |>  <  __/ | |__| |____) |"
+echo " |_|   |_/_/\_\___|_|\____/|_____/ "
+echo "                                   "
 
 ROOT_DIR="$(pwd)"
 cd $ROOT_DIR
 
-EVO_VERSION="$(awk '/EVO_VERSION := / {print $3}' $ROOT_DIR/vendor/lineage/config/version.mk)"
+ANDROID_SOURCE_VERSION="15.0"
+ANDROID_QPR="QPR2"
 ANDROID_BUILD_VERSION="bp1a"
 
-echo "Building Evolution X version $EVO_VERSION ($ANDROID_BUILD_VERSION)"
+echo "Building PixelOS version $ANDROID_SOURCE_VERSION ($ANDROID_BUILD_VERSION)"
 echo "---------------------------"
 
 source build/envsetup.sh
@@ -21,62 +23,57 @@ START_TIME=$(date +%s)
 RELEASE_DATE=$(date +%Y%m%d)
 RELEASE_DATE_FMT=$(date +%Y-%m-%d)
 
-cd ~/evo
+cd ~/pixelos
 
 compress() {
     echo "----- Compressing the variant -----"
     cd $ROOT_DIR/out/target/product/tdgsi_arm64_ab
     xz -9 -T0 -v -z system.img
-    mv system.img.xz $HOME/Downloads/evolution_arm64_$variant-$EVO_VERSION-unofficial-$RELEASE_DATE.img.xz
+    mv system.img.xz $HOME/Downloads/pixelos_arm64_$variant-$ANDROID_SOURCE_VERSION-unofficial-$RELEASE_DATE.img.xz
 }
 
 build() {
     cd $ROOT_DIR
-    lunch evolution_arm64_$variant-$ANDROID_BUILD_VERSION-userdebug
+    lunch pixelos_arm64_$variant-$ANDROID_BUILD_VERSION-userdebug
     make systemimage -j$(nproc --all) || exit
     compress
 }
 
-echo "----- Building vanilla variant -----"
-variant="bvN"
+echo "----- Building EXT4 variant -----"
+variant="bgN_ext4"
 build
 
-echo "----- Building slim variant -----"
-variant="bgN_slim"
+echo "----- Building EROFS variant -----"
+variant="bgN_erofs"
 build
 
-echo "----- Building normal variant -----"
-variant="bgN"
-build
+END_TIME=$(date +%s)
+DELTA_TIME=$((START_TIME - END_TIME))
+DELTA_MINUTES=$((DELTA_TIME / 60))
 
 echo "----- Done! -----"
 echo "Start time: $START_TIME"
-vanilla_size=$(wc -c < $HOME/Downloads/evolution_arm64_bvN-$EVO_VERSION-unofficial-$RELEASE_DATE.img.xz)
-echo "Vanilla size: $slim_size"
-slim_size=$(wc -c < $HOME/Downloads/evolution_arm64_bgN_slim-$EVO_VERSION-unofficial-$RELEASE_DATE.img.xz)
-echo "Slim size: $slim_size"
-normal_size=$(wc -c < $HOME/Downloads/evolution_arm64_bgN-$EVO_VERSION-unofficial-$RELEASE_DATE.img.xz)
+echo "End time: $END_TIME"
+echo "Delta time (minutes): $DELTA_MINUTES"
+ext4_size=$(wc -c < $HOME/Downloads/pixelos_arm64_bgN_ext4-$ANDROID_SOURCE_VERSION-unofficial-$RELEASE_DATE.img.xz)
+echo "EXT4 size: $slim_size"
+erofs_size=$(wc -c < $HOME/Downloads/pixelos_arm64_bgN_erofs-$ANDROID_SOURCE_VERSION-unofficial-$RELEASE_DATE.img.xz)
 echo "Normal size: $normal_size"
 
 echo "----- OTA -----"
 echo "{
-    \"version\": \"$RELEASE_DATE_FMT (Evolution X $EVO_VERSION)\",
+    \"version\": \"$RELEASE_DATE_FMT (PixelOS - Android $ANDROID_QPR)\",
     \"date\": \"$START_TIME\",
     \"variants\": [
         {
-            \"name\": \"evolution_arm64_bgN\",
-            \"size\": \"$normal_size\",
-            \"url\": \"https://github.com/mytja/treble_evo/releases/download/$RELEASE_DATE/evolution_arm64_bgN-$EVO_VERSION-unofficial-$RELEASE_DATE.img.xz\"
+            \"name\": \"pixelos_arm64_bgN_erofs\",
+            \"size\": \"$erofs_size\",
+            \"url\": \"https://github.com/mytja/treble_pixelos/releases/download/$RELEASE_DATE/pixelos_arm64_bgN_erofs-$ANDROID_SOURCE_VERSION-unofficial-$RELEASE_DATE.img.xz\"
         },
         {
-            \"name\": \"evolution_arm64_bgN_slim\",
-            \"size\": \"$slim_size\",
-            \"url\": \"https://github.com/mytja/treble_evo/releases/download/$RELEASE_DATE/evolution_arm64_bgN_slim-$EVO_VERSION-unofficial-$RELEASE_DATE.img.xz\"
-        },
-        {
-            \"name\": \"evolution_arm64_bvN\",
-            \"size\": \"$vanilla_size\",
-            \"url\": \"https://github.com/mytja/treble_evo/releases/download/$RELEASE_DATE/evolution_arm64_bvN-$EVO_VERSION-unofficial-$RELEASE_DATE.img.xz\"
+            \"name\": \"pixelos_arm64_bgN_ext4\",
+            \"size\": \"$ext4_size\",
+            \"url\": \"https://github.com/mytja/treble_pixelos/releases/download/$RELEASE_DATE/pixelos_arm64_bgN_ext4-$ANDROID_SOURCE_VERSION-unofficial-$RELEASE_DATE.img.xz\"
         }
     ]
 }"

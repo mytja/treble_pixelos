@@ -1,4 +1,3 @@
 PRODUCT_MAKEFILES := \
-	$(LOCAL_DIR)/evolution_arm64_bgN.mk \
-	$(LOCAL_DIR)/evolution_arm64_bgN_slim.mk \
-	$(LOCAL_DIR)/evolution_arm64_bvN.mk \
+	$(LOCAL_DIR)/pixelos_arm64_bgN_erofs.mk \
+	$(LOCAL_DIR)/pixelos_arm64_bgN_ext4.mk \
