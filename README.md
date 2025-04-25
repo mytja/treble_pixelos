@@ -63,7 +63,7 @@ source build/envsetup.sh
 
 ccache -M 50G -F 0
 
-lunch pixelos_arm64_bgN-bp1a-userdebug 
+lunch pixelos_arm64_bgN_erofs-bp1a-userdebug 
 
 make systemimage -j$(nproc --all)
 ```

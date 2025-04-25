@@ -48,7 +48,7 @@ variant="bgN_erofs"
 build
 
 END_TIME=$(date +%s)
-DELTA_TIME=$((START_TIME - END_TIME))
+DELTA_TIME=$((END_TIME - START_TIME))
 DELTA_MINUTES=$((DELTA_TIME / 60))
 
 echo "----- Done! -----"
@@ -56,9 +56,9 @@ echo "Start time: $START_TIME"
 echo "End time: $END_TIME"
 echo "Delta time (minutes): $DELTA_MINUTES"
 ext4_size=$(wc -c < $HOME/Downloads/pixelos_arm64_bgN_ext4-$ANDROID_SOURCE_VERSION-unofficial-$RELEASE_DATE.img.xz)
-echo "EXT4 size: $slim_size"
+echo "EXT4 size: $ext4_size"
 erofs_size=$(wc -c < $HOME/Downloads/pixelos_arm64_bgN_erofs-$ANDROID_SOURCE_VERSION-unofficial-$RELEASE_DATE.img.xz)
-echo "Normal size: $normal_size"
+echo "EROFS size: $erofs_size"
 
 echo "----- OTA -----"
 echo "{
