@@ -24,8 +24,6 @@ override TARGET_SUPPORTS_64_BIT_APPS := true # To enable Face Unlock. Override s
 #override SELINUX_IGNORE_NEVERALLOWS := true
 override BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 
-TARGET_INCLUDE_ACCORD := false
-
 # OTA
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.system.ota.json_url=https://raw.githubusercontent.com/mytja/treble_pixelos/fifteen/ota.json

@@ -1,21 +1,16 @@
 {
-    "version": "2025-04-21 (Evolution X 10.5)",
-    "date": "1745272554",
+    "version": "2025-04-25 (PixelOS - Android QPR2)",
+    "date": "1745602477",
     "variants": [
         {
-            "name": "evolution_arm64_bgN",
-            "size": "1936505472",
-            "url": "https://github.com/mytja/treble_evo/releases/download/20250421/evolution_arm64_bgN-10.5-unofficial-20250421.img.xz"
+            "name": "pixelos_arm64_bgN_erofs",
+            "size": "1852932896",
+            "url": "https://github.com/mytja/treble_pixelos/releases/download/20250425/pixelos_arm64_bgN_erofs-15.0-unofficial-20250425.img.xz"
         },
         {
-            "name": "evolution_arm64_bgN_slim",
-            "size": "1391467592",
-            "url": "https://github.com/mytja/treble_evo/releases/download/20250421/evolution_arm64_bgN_slim-10.5-unofficial-20250421.img.xz"
-        },
-        {
-            "name": "evolution_arm64_bvN",
-            "size": "990876264",
-            "url": "https://github.com/mytja/treble_evo/releases/download/20250421/evolution_arm64_bvN-10.5-unofficial-20250421.img.xz"
+            "name": "pixelos_arm64_bgN_ext4",
+            "size": "1604992412",
+            "url": "https://github.com/mytja/treble_pixelos/releases/download/20250425/pixelos_arm64_bgN_ext4-15.0-unofficial-20250425.img.xz"
         }
     ]
 }
