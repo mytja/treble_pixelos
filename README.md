@@ -14,13 +14,13 @@ mkdir ~/pixelos
 cd ~/pixelos
 ```
 
-## Initalize the Treble Evolution X repo
+## Initalize the Treble PixelOS repo
 ```bash
 repo init --depth=1 -u https://github.com/PixelOS-AOSP/manifest.git -b fifteen --git-lfs
 ```
 
 ## Clone the Manifest
-This adds necessary dependencies for the Evolution X GSI.
+This adds necessary dependencies for the PixelOS GSI.
 ```bash
 git clone https://github.com/mytja/treble_manifest.git -b pixelos-fifteen .repo/local_manifests
 ```
