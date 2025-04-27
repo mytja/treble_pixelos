@@ -4,6 +4,7 @@ $(call inherit-product, device/phh/treble/base.mk)
 $(call inherit-product, vendor/aosp/config/common_full_phone.mk)
 $(call inherit-product, device/lineage/sepolicy/common/sepolicy.mk)
 $(call inherit-product, vendor/aosp/config/BoardConfigSoong.mk)
+$(call inherit-product, vendor/certification/config.mk)
 
 # Overwrite the inherited "emulator" characteristics
 PRODUCT_CHARACTERISTICS := device
